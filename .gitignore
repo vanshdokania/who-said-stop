@@ -1,0 +1,24 @@
+# Dataset: do not upload competition recordings or manifests
+data/
+
+# Python environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Generated features and model outputs
+features_output/
+checkpoints/
+*.pt
+*.pth
+
+# IDE and operating system files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.*
+!.env.example
