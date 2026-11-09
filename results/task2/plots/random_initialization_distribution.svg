@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="460" viewBox="0 0 800 460">
+<rect width="100%" height="100%" fill="white"/>
+<text x="400" y="25" text-anchor="middle" font-size="18" font-family="sans-serif">Final training log-likelihood across random initializations</text>
+<line x1="90" y1="365" x2="750" y2="365" stroke="#222"/>
+<line x1="90" y1="45" x2="90" y2="365" stroke="#222"/>
+<rect x="93.00" y="45.00" width="126.00" height="320.00" fill="#4776a8"/>
+<text x="156.00" y="38.00" text-anchor="middle" font-size="12">5</text>
+<rect x="225.00" y="237.00" width="126.00" height="128.00" fill="#4776a8"/>
+<text x="288.00" y="230.00" text-anchor="middle" font-size="12">2</text>
+<rect x="357.00" y="173.00" width="126.00" height="192.00" fill="#4776a8"/>
+<text x="420.00" y="166.00" text-anchor="middle" font-size="12">3</text>
+<rect x="489.00" y="45.00" width="126.00" height="320.00" fill="#4776a8"/>
+<text x="552.00" y="38.00" text-anchor="middle" font-size="12">5</text>
+<rect x="621.00" y="45.00" width="126.00" height="320.00" fill="#4776a8"/>
+<text x="684.00" y="38.00" text-anchor="middle" font-size="12">5</text>
+<line x1="497.95" y1="45" x2="497.95" y2="365" stroke="#c43b3b" stroke-dasharray="6 4"/>
+<text x="497.95" y="60" text-anchor="middle" font-size="12" fill="#a22">median</text>
+<text x="420.00" y="420" text-anchor="middle" font-size="14">Final training log-likelihood per frame</text>
+<text x="20" y="205.00" transform="rotate(-90 20 205.00)" text-anchor="middle" font-size="14">Run count</text>
+<text x="90" y="387" font-size="12">667.2181</text>
+<text x="750" y="387" text-anchor="end" font-size="12">667.5619</text>
+</svg>

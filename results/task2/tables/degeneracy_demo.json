@@ -1,0 +1,15 @@
+{
+  "constructed_case": "identical observations produce a zero, singular covariance",
+  "dimensions": 3,
+  "log_likelihood_is_finite": true,
+  "observations": 8,
+  "regularization_epsilon": 0.0001,
+  "regularized_average_log_likelihood": 11.058694958350255,
+  "regularized_cholesky_diagonal": [
+    0.01,
+    0.01,
+    0.01
+  ],
+  "regularized_cholesky_info": 0,
+  "unregularized_cholesky_info": 1
+}

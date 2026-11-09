@@ -117,3 +117,25 @@ Run the standard-library test suite from the project root:
 The tests cover audio validation, framing, phase wrapping, weak-bin masking,
 silence handling, normalization, configuration, and the complete waveform
 to feature-tensor path.
+
+## Task 2: GMM behaviour study
+
+The GMM implementation in `src/gmm/` uses PyTorch for initialization,
+expectation-maximization, covariance calculations, and log-domain likelihoods.
+Run all Task 2 experiments from the project root with:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.task2.run_all
+```
+
+Only `features_output/background/` is loaded. A fixed 80/20 split is made by
+speaker with seed 2026; 16 fitting frames per speaker are sampled
+deterministically (seed 2027), while every held-out frame is used for
+evaluation. The study compares 1, 2, 4, and 8 components with full, diagonal,
+tied, and spherical covariance. It also runs 20 random starts of a diagonal
+4-component model, compares random and k-means initialization, and tests
+covariance regularization on a singular example. A standard-library SVG
+histogram is written, so no plotting package is required.
+
+Code lives under `src/gmm/` and `experiments/task2/`; generated tables, plots,
+logs, and the experiment report are written under `results/task2/`.

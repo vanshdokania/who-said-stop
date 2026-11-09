@@ -1,0 +1,3 @@
+initialization,seed,train_log_likelihood,train_average_log_likelihood,heldout_average_log_likelihood,iterations,converged
+kmeans,2026,6717936.266086349,667.5214890785323,663.6372965917077,5,True
+random,2026,6717162.815030445,667.4446358337088,663.6235737457548,12,True

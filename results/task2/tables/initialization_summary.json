@@ -1,0 +1,66 @@
+{
+  "configuration": {
+    "covariance_type": "diagonal",
+    "fitting_frames": 10064,
+    "heldout_frames": 17339,
+    "max_iterations": 40,
+    "n_components": 4,
+    "reg_covar": 0.0001
+  },
+  "random_vs_kmeans": [
+    {
+      "converged": true,
+      "heldout_average_log_likelihood": 663.6372965917077,
+      "initialization": "kmeans",
+      "iterations": 5,
+      "seed": 2026,
+      "train_average_log_likelihood": 667.5214890785323,
+      "train_log_likelihood": 6717936.266086349
+    },
+    {
+      "converged": true,
+      "heldout_average_log_likelihood": 663.6235737457548,
+      "initialization": "random",
+      "iterations": 12,
+      "seed": 2026,
+      "train_average_log_likelihood": 667.4446358337088,
+      "train_log_likelihood": 6717162.815030445
+    }
+  ],
+  "repeated_random_initializations": {
+    "best_of_n_improvement_over_single_run": 1040.6348129352555,
+    "best_seed": 31,
+    "best_train_log_likelihood": 6718343.088623699,
+    "covariance_type": "diagonal",
+    "initialization_comparison_winner_by_heldout": "kmeans",
+    "median_train_log_likelihood": 6717021.569812557,
+    "n_components": 4,
+    "seed_count": 20,
+    "seeds": [
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39
+    ],
+    "single_run_seed": 20,
+    "single_run_train_log_likelihood": 6717302.453810764,
+    "worst_seed": 34,
+    "worst_train_log_likelihood": 6714882.707090156
+  }
+}
