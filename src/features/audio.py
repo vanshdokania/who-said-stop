@@ -1,15 +1,14 @@
-"""Audio loading and validation for the feature extraction pipeline."""
+"""PCM WAV loading and validation for the feature extraction pipeline."""
 
+import wave
 from dataclasses import dataclass
-import os
 from pathlib import Path
-import shutil
 
 import torch
-import torchaudio
 
 
 EXPECTED_SAMPLE_RATE = 16_000
+EXPECTED_SAMPLE_WIDTH_BYTES = 2
 
 
 @dataclass(frozen=True)
@@ -22,7 +21,12 @@ class AudioRecording:
 
 
 def load_audio(audio_path: str | Path) -> AudioRecording:
-    """Load a mono, 16 kHz audio file and return its waveform and metadata."""
+    """Load mono, 16 kHz, 16-bit PCM WAV audio and return its waveform and metadata.
+
+    Python's standard-library WAV reader avoids the blocked TorchCodec native
+    extension. Samples are converted directly to normalized float32 Torch
+    tensors; no NumPy or third-party decoder is used.
+    """
     path = Path(audio_path)
     if not path.exists():
         raise FileNotFoundError(f"Audio file does not exist: {path}")
@@ -30,25 +34,48 @@ def load_audio(audio_path: str | Path) -> AudioRecording:
         raise IsADirectoryError(f"Audio path is not a file: {path}")
 
     try:
-        ffmpeg_executable = shutil.which("ffmpeg") if os.name == "nt" else None
-        if ffmpeg_executable is None:
-            waveform, sample_rate = torchaudio.load(str(path))
-        else:
-            ffmpeg_directory = str(Path(ffmpeg_executable).parent)
-            with os.add_dll_directory(ffmpeg_directory):
-                waveform, sample_rate = torchaudio.load(str(path))
-    except (OSError, RuntimeError, ValueError) as error:
+        with wave.open(str(path), "rb") as audio_file:
+            channels = audio_file.getnchannels()
+            sample_rate = audio_file.getframerate()
+            sample_width = audio_file.getsampwidth()
+            frame_count = audio_file.getnframes()
+            compression = audio_file.getcomptype()
+            if compression != "NONE":
+                raise ValueError(
+                    f"Unsupported WAV compression in '{path}': {compression}"
+                )
+            if sample_width != EXPECTED_SAMPLE_WIDTH_BYTES:
+                raise ValueError(
+                    f"Expected 16-bit PCM audio in '{path}', "
+                    f"got {sample_width * 8}-bit samples"
+                )
+            raw_samples = audio_file.readframes(frame_count)
+    except (wave.Error, EOFError, OSError) as error:
         raise ValueError(f"Could not decode audio file '{path}': {error}") from error
 
-    if waveform.ndim != 2:
+    expected_bytes = frame_count * channels * sample_width
+    if len(raw_samples) != expected_bytes:
         raise ValueError(
-            f"Expected a [channels, samples] waveform in '{path}', "
-            f"got shape {tuple(waveform.shape)}"
+            f"Truncated audio data in '{path}': expected {expected_bytes} bytes, "
+            f"read {len(raw_samples)}"
         )
+    if frame_count == 0:
+        waveform = torch.empty((channels, 0), dtype=torch.float32)
+    else:
+        integer_samples = torch.frombuffer(
+            bytearray(raw_samples),
+            dtype=torch.int16,
+        )
+        waveform = (
+            integer_samples.to(torch.float32)
+            .div_(32768.0)
+            .reshape(frame_count, channels)
+            .transpose(0, 1)
+            .contiguous()
+        )
+
     if waveform.shape[0] != 1:
-        raise ValueError(
-            f"Expected mono audio in '{path}', got {waveform.shape[0]} channels"
-        )
+        raise ValueError(f"Expected mono audio in '{path}', got {waveform.shape[0]} channels")
     if sample_rate != EXPECTED_SAMPLE_RATE:
         raise ValueError(
             f"Expected a {EXPECTED_SAMPLE_RATE} Hz sample rate in '{path}', "
