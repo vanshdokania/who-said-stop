@@ -1,0 +1,22 @@
+Task 3 data: fitting=10064 frames/629 speakers; heldout=17339 frames/157 speakers.
+diagonal  K= 16: status=success, train_s=2.00, iter=23, converged=True, heldout_avg_LL=669.364217, stable=True
+diagonal  K= 32: status=success, train_s=2.30, iter=26, converged=True, heldout_avg_LL=670.780245, stable=True
+diagonal  K= 64: status=success, train_s=3.78, iter=24, converged=True, heldout_avg_LL=671.048486, stable=True
+diagonal  K=128: status=success, train_s=5.55, iter=18, converged=True, heldout_avg_LL=670.991778, stable=True
+diagonal  K=256: status=success, train_s=8.25, iter=17, converged=True, heldout_avg_LL=670.872951, stable=True
+spherical K= 16: status=success, train_s=1.21, iter=11, converged=True, heldout_avg_LL=658.024112, stable=True
+spherical K= 32: status=success, train_s=1.71, iter=14, converged=True, heldout_avg_LL=658.623802, stable=True
+spherical K= 64: status=success, train_s=1.96, iter=13, converged=True, heldout_avg_LL=658.675005, stable=True
+spherical K=128: status=success, train_s=2.97, iter=14, converged=True, heldout_avg_LL=658.845292, stable=True
+spherical K=256: status=success, train_s=4.70, iter=14, converged=True, heldout_avg_LL=658.636077, stable=True
+tied      K= 16: status=success, train_s=1.29, iter=4, converged=True, heldout_avg_LL=670.389919, stable=True
+tied      K= 32: status=success, train_s=1.43, iter=4, converged=True, heldout_avg_LL=670.498624, stable=True
+tied      K= 64: status=success, train_s=0.75, iter=3, converged=True, heldout_avg_LL=670.501037, stable=True
+tied      K=128: status=success, train_s=1.08, iter=4, converged=True, heldout_avg_LL=670.552138, stable=True
+tied      K=256: status=success, train_s=2.63, iter=7, converged=True, heldout_avg_LL=670.799842, stable=True
+full      K= 16: status=success, train_s=17.23, iter=5, converged=True, heldout_avg_LL=654.160833, stable=True
+full      K= 32: status=success, train_s=26.69, iter=4, converged=True, heldout_avg_LL=666.379415, stable=True
+full      K= 64: status=success, train_s=53.96, iter=4, converged=True, heldout_avg_LL=669.744188, stable=True
+full      K=128: status=success, train_s=96.52, iter=4, converged=True, heldout_avg_LL=665.604052, stable=True
+full      K=256: status=success, train_s=212.23, iter=4, converged=True, heldout_avg_LL=665.961581, stable=True
+Selected diagonal K=64 with held-out avg LL 671.048486. Checkpoint: E:\Machine Learning\who_said_stop\results\task3\models\ubm_final.pt

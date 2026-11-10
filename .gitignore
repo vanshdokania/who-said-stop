@@ -6,6 +6,7 @@ data/
 venv/
 __pycache__/
 *.py[cod]
+.graph-it/
 
 # Generated features and model outputs
 features_output/

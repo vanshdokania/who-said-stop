@@ -73,6 +73,54 @@ class GMMTests(unittest.TestCase):
         )
         self.assertAlmostEqual(scores.item(), -0.5 * math.log(2 * math.pi), places=12)
 
+    def test_specialized_covariance_likelihoods_match_gaussian_formula(self) -> None:
+        observation = torch.tensor([[0.5, -0.25]], dtype=torch.float64)
+        mean = torch.tensor([[0.1, 0.2]], dtype=torch.float64)
+        cases = (
+            ("diagonal", torch.tensor([[0.5, 2.0]], dtype=torch.float64), [0.5, 2.0]),
+            ("spherical", torch.tensor([0.75], dtype=torch.float64), [0.75, 0.75]),
+        )
+        for covariance_type, covariance, diagonal in cases:
+            model = GaussianMixture(
+                weights=torch.ones(1, dtype=torch.float64),
+                means=mean,
+                covariances=covariance,
+                covariance_type=covariance_type,
+                reg_covar=1e-4,
+            )
+            difference = observation[0] - mean[0]
+            expected = -0.5 * (
+                2 * math.log(2 * math.pi)
+                + sum(math.log(value) for value in diagonal)
+                + sum(
+                    float(difference[index] ** 2) / diagonal[index]
+                    for index in range(2)
+                )
+            )
+            actual = component_log_probabilities(observation, model).item()
+            self.assertAlmostEqual(actual, expected, places=12)
+
+        tied_covariance = torch.tensor(
+            [[2.0, 0.25], [0.25, 1.0]],
+            dtype=torch.float64,
+        )
+        tied_model = GaussianMixture(
+            weights=torch.ones(1, dtype=torch.float64),
+            means=mean,
+            covariances=tied_covariance,
+            covariance_type="tied",
+            reg_covar=1e-4,
+        )
+        difference = observation[0] - mean[0]
+        quadratic = difference @ torch.linalg.solve(tied_covariance, difference)
+        expected = -0.5 * (
+            2 * math.log(2 * math.pi)
+            + torch.linalg.slogdet(tied_covariance).logabsdet.item()
+            + quadratic.item()
+        )
+        actual = component_log_probabilities(observation, tied_model).item()
+        self.assertAlmostEqual(actual, expected, places=12)
+
     def test_random_initialization_is_reproducible(self) -> None:
         config = GMMConfig(2, "diagonal", max_iter=20)
         first = fit_gmm(self.data, config, seed=29)

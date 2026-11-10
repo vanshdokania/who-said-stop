@@ -63,11 +63,92 @@ def component_log_probabilities(
     if chunk_size < 1:
         raise ValueError("chunk_size must be at least one")
     data = data.to(dtype=model.means.dtype, device=model.means.device)
-    factors, log_determinants = _cholesky_factors(model)
     constant = model.n_features * LOG_2PI
     log_weights = model.weights.clamp_min(torch.finfo(model.weights.dtype).tiny).log()
     output = []
 
+    if model.covariance_type in ("diagonal", "spherical"):
+        if model.covariance_type == "diagonal":
+            variances = model.covariances.clamp_min(model.reg_covar)
+            inverse_variances = variances.reciprocal()
+            mean_weighted = model.means * inverse_variances
+            mean_constant = (model.means * mean_weighted).sum(dim=1)
+        else:
+            variances = model.covariances.clamp_min(model.reg_covar).unsqueeze(1)
+            inverse_variances = variances.reciprocal()
+            mean_weighted = model.means
+            mean_constant = model.means.square().sum(dim=1)
+        if model.covariance_type == "diagonal":
+            log_determinants = variances.log().sum(dim=1)
+        else:
+            log_determinants = model.n_features * variances[:, 0].log()
+        for start in range(0, data.shape[0], chunk_size):
+            batch = data[start : start + chunk_size]
+            batch_squared = batch.square()
+            if model.covariance_type == "diagonal":
+                quadratic = batch_squared @ inverse_variances.T
+                cross = batch @ mean_weighted.T
+                mahalanobis = (
+                    quadratic - 2 * cross + mean_constant[None, :]
+                ).clamp_min(0)
+            else:
+                quadratic = batch_squared.sum(dim=1, keepdim=True)
+                cross = batch @ mean_weighted.T
+                mahalanobis = (
+                    quadratic
+                    - 2 * cross
+                    + mean_constant[None, :]
+                ).clamp_min(0) / variances[:, 0][None, :]
+            output.append(
+                log_weights[None, :]
+                - 0.5
+                * (
+                    constant
+                    + log_determinants[None, :]
+                    + mahalanobis
+                )
+            )
+        return torch.cat(output, dim=0)
+
+    if model.covariance_type == "tied":
+        identity = torch.eye(
+            model.n_features,
+            dtype=model.means.dtype,
+            device=model.means.device,
+        )
+        jitter = 0.0
+        for attempt in range(7):
+            candidate = (
+                model.covariances
+                if jitter == 0
+                else model.covariances + jitter * identity
+            )
+            factor, info = torch.linalg.cholesky_ex(candidate)
+            if int(info.item()) == 0:
+                break
+            jitter = model.reg_covar * (10.0**attempt)
+        else:
+            raise RuntimeError(
+                "Covariance remained non-positive-definite after regularization"
+            )
+        precision = torch.cholesky_inverse(factor)
+        log_determinant = 2 * torch.log(factor.diagonal()).sum()
+        weighted_means = model.means @ precision
+        mean_constants = (model.means * weighted_means).sum(dim=1)
+        for start in range(0, data.shape[0], chunk_size):
+            batch = data[start : start + chunk_size]
+            quadratic = ((batch @ precision) * batch).sum(dim=1, keepdim=True)
+            cross = batch @ weighted_means.T
+            mahalanobis = (
+                quadratic - 2 * cross + mean_constants[None, :]
+            ).clamp_min(0)
+            output.append(
+                log_weights[None, :]
+                - 0.5 * (constant + log_determinant + mahalanobis)
+            )
+        return torch.cat(output, dim=0)
+
+    factors, log_determinants = _cholesky_factors(model)
     for start in range(0, data.shape[0], chunk_size):
         batch = data[start : start + chunk_size]
         component_scores = []

@@ -139,3 +139,34 @@ histogram is written, so no plotting package is required.
 
 Code lives under `src/gmm/` and `experiments/task2/`; generated tables, plots,
 logs, and the experiment report are written under `results/task2/`.
+
+## Task 3: UBM training
+
+Run the Task 3 comparison with:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.task3.run_all
+```
+
+It reuses the saved Task 2 speaker-disjoint split and deterministic
+16-frames-per-fitting-speaker sample. The 16/32/64/128/256-component grid is
+trained on background features only with the Task 2 PyTorch EM implementation.
+Comparison tables, SVG plots, logs, the selected UBM checkpoint, and a report
+are saved under `results/task3/`. The held-out background frames are scored
+only after fitting and are never used for parameter updates.
+
+## Task 4: MAP adaptation and enrolment
+
+Run Task 4 with:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.task4.run_all
+```
+
+The script loads the existing Task 3 diagonal 64-component UBM, pools each
+speaker's enrolment features in `enrol_index` order, and performs PyTorch
+mean-only MAP adaptation for relevance factors 4, 8, 16, and 32. Development
+models are evaluated only with development trials; the selected factor is then
+applied to evaluation enrolment features without reading evaluation trials or
+labels. Adapted models, independent development GMM baselines, metrics, and
+tables are written under `results/task4/`.

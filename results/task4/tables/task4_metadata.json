@@ -1,0 +1,102 @@
+{
+  "data": {
+    "dev_frames": 14091,
+    "dev_max_speaker_frames": 298,
+    "dev_median_speaker_frames": 132.0,
+    "dev_min_speaker_frames": 73,
+    "dev_recordings": 291,
+    "dev_speakers": 97,
+    "dev_trials": 1824,
+    "dev_unique_test_files": 456,
+    "eval_frames": 26095,
+    "eval_recordings": 537,
+    "eval_speakers": 179
+  },
+  "development_comparison": [
+    {
+      "eer": 0.2959935817078674,
+      "far_at_eer": 0.29606879606879605,
+      "frr_at_eer": 0.29591836734693877,
+      "method": "MAP",
+      "nontarget_trials": 1628,
+      "relevance_factor": 4,
+      "speaker_count": 97,
+      "target_trials": 196,
+      "threshold_at_eer": -3.541628265778627,
+      "total_trials": 1824
+    },
+    {
+      "eer": 0.22434563505992078,
+      "far_at_eer": 0.2242014742014742,
+      "frr_at_eer": 0.22448979591836737,
+      "method": "MAP",
+      "nontarget_trials": 1628,
+      "relevance_factor": 8,
+      "speaker_count": 97,
+      "target_trials": 196,
+      "threshold_at_eer": -1.4166673681286284,
+      "total_trials": 1824
+    },
+    {
+      "eer": 0.1530048137190994,
+      "far_at_eer": 0.15294840294840295,
+      "frr_at_eer": 0.15306122448979587,
+      "method": "MAP",
+      "nontarget_trials": 1628,
+      "relevance_factor": 16,
+      "speaker_count": 97,
+      "target_trials": 196,
+      "threshold_at_eer": -0.32946018495511,
+      "total_trials": 1824
+    },
+    {
+      "eer": 0.11232638018352305,
+      "far_at_eer": 0.11240786240786241,
+      "frr_at_eer": 0.11224489795918369,
+      "method": "MAP",
+      "nontarget_trials": 1628,
+      "relevance_factor": 32,
+      "speaker_count": 97,
+      "target_trials": 196,
+      "threshold_at_eer": 0.05320629884670325,
+      "total_trials": 1824
+    },
+    {
+      "eer": 0.4796607832322118,
+      "far_at_eer": 0.4797297297297297,
+      "frr_at_eer": 0.47959183673469385,
+      "method": "independent_gmm",
+      "nontarget_trials": 1628,
+      "relevance_factor": "",
+      "speaker_count": 97,
+      "target_trials": 196,
+      "threshold_at_eer": -112.30017590311274,
+      "total_trials": 1824
+    }
+  ],
+  "independent_baseline": {
+    "converged_speaker_count": 97,
+    "covariance_type": "diagonal",
+    "max_iterations": 40,
+    "n_components": 64,
+    "reg_covar": 0.0001,
+    "speaker_count": 97,
+    "tolerance": 0.0001
+  },
+  "map_settings": {
+    "mode": "mean_only",
+    "occupancy_epsilon": 1e-08,
+    "scoring_chunk_size": 128,
+    "statistics_chunk_size": 256
+  },
+  "relevance_factors": [
+    4,
+    8,
+    16,
+    32
+  ],
+  "selected_relevance_factor": 32,
+  "ubm_covariances_unchanged": true,
+  "ubm_source": "results\\task3\\models\\ubm_final.pt",
+  "ubm_weights_unchanged": true
+}

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620">
+<rect width="100%" height="100%" fill="white"/>
+<text x="500.00" y="28.00" text-anchor="middle" font-family="sans-serif" font-size="18">Held-out likelihood by covariance and mixture count</text>
+<line x1="95" y1="525" x2="825" y2="525" stroke="#222"/>
+<line x1="95" y1="70" x2="95" y2="525" stroke="#222"/>
+<text x="460.00" y="585.00" text-anchor="middle" font-size="14">Mixture components</text>
+<text x="25.00" y="297.50" text-anchor="middle" font-size="14" transform="rotate(-90 25 297.5)">Held-out average log-likelihood per frame</text>
+<circle cx="95.00" cy="115.38" r="4" fill="#245b8f"/>
+<circle cx="277.50" cy="77.23" r="4" fill="#245b8f"/>
+<circle cx="460.00" cy="70.00" r="4" fill="#245b8f"/>
+<circle cx="642.50" cy="71.53" r="4" fill="#245b8f"/>
+<circle cx="825.00" cy="74.73" r="4" fill="#245b8f"/>
+<polyline points="95.00,115.38 277.50,77.23 460.00,70.00 642.50,71.53 825.00,74.73" fill="none" stroke="#245b8f" stroke-width="2"/>
+<text x="837.00" y="88.00" fill="#245b8f" font-size="12">diagonal</text>
+<circle cx="95.00" cy="420.91" r="4" fill="#c55a11"/>
+<circle cx="277.50" cy="404.76" r="4" fill="#c55a11"/>
+<circle cx="460.00" cy="403.38" r="4" fill="#c55a11"/>
+<circle cx="642.50" cy="398.79" r="4" fill="#c55a11"/>
+<circle cx="825.00" cy="404.42" r="4" fill="#c55a11"/>
+<polyline points="95.00,420.91 277.50,404.76 460.00,403.38 642.50,398.79 825.00,404.42" fill="none" stroke="#c55a11" stroke-width="2"/>
+<text x="837.00" y="110.00" fill="#c55a11" font-size="12">spherical</text>
+<circle cx="95.00" cy="87.74" r="4" fill="#548235"/>
+<circle cx="277.50" cy="84.81" r="4" fill="#548235"/>
+<circle cx="460.00" cy="84.75" r="4" fill="#548235"/>
+<circle cx="642.50" cy="83.37" r="4" fill="#548235"/>
+<circle cx="825.00" cy="76.70" r="4" fill="#548235"/>
+<polyline points="95.00,87.74 277.50,84.81 460.00,84.75 642.50,83.37 825.00,76.70" fill="none" stroke="#548235" stroke-width="2"/>
+<text x="837.00" y="132.00" fill="#548235" font-size="12">tied</text>
+<circle cx="95.00" cy="525.00" r="4" fill="#7030a0"/>
+<circle cx="277.50" cy="195.80" r="4" fill="#7030a0"/>
+<circle cx="460.00" cy="105.14" r="4" fill="#7030a0"/>
+<circle cx="642.50" cy="216.69" r="4" fill="#7030a0"/>
+<circle cx="825.00" cy="207.06" r="4" fill="#7030a0"/>
+<polyline points="95.00,525.00 277.50,195.80 460.00,105.14 642.50,216.69 825.00,207.06" fill="none" stroke="#7030a0" stroke-width="2"/>
+<text x="837.00" y="154.00" fill="#7030a0" font-size="12">full</text>
+<text x="95.00" y="547.00" text-anchor="middle" font-size="11">16</text>
+<text x="277.50" y="547.00" text-anchor="middle" font-size="11">32</text>
+<text x="460.00" y="547.00" text-anchor="middle" font-size="11">64</text>
+<text x="642.50" y="547.00" text-anchor="middle" font-size="11">128</text>
+<text x="825.00" y="547.00" text-anchor="middle" font-size="11">256</text>
+</svg>

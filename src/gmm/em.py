@@ -52,7 +52,8 @@ def _maximization_step(
     feature_count = model.n_features
     masses = responsibilities.sum(dim=0)
     safe_masses = masses.clamp_min(torch.finfo(data.dtype).eps)
-    means = responsibilities.T @ data / safe_masses.unsqueeze(1)
+    weighted_sum = responsibilities.T @ data
+    means = weighted_sum / safe_masses.unsqueeze(1)
     low_mass = masses < max(data.shape[0] * config.min_component_weight, 1e-8)
 
     generator = torch.Generator(device=data.device)
@@ -70,41 +71,39 @@ def _maximization_step(
     weights = weights / weights.sum()
     covariances = []
 
-    if config.covariance_type in ("full", "tied"):
+    if config.covariance_type == "full":
         for component in range(component_count):
             difference = data - means[component]
             weighted_difference = difference * responsibilities[:, component : component + 1]
             scatter = weighted_difference.T @ difference
             covariances.append(scatter)
-        if config.covariance_type == "full":
-            covariance_tensor = torch.stack(
-                [
-                    _regularized_covariance(
-                        scatter / safe_masses[component],
-                        config.reg_covar,
-                    )
-                    for component, scatter in enumerate(covariances)
-                ]
-            )
-        else:
-            tied = torch.stack(covariances).sum(dim=0) / safe_masses.sum()
-            covariance_tensor = _regularized_covariance(tied, config.reg_covar)
+        covariance_tensor = torch.stack(
+            [
+                _regularized_covariance(
+                    scatter / safe_masses[component],
+                    config.reg_covar,
+                )
+                for component, scatter in enumerate(covariances)
+            ]
+        )
+    elif config.covariance_type == "tied":
+        tied_scatter = data.T @ data - (means.T * safe_masses) @ means
+        tied = tied_scatter / safe_masses.sum()
+        covariance_tensor = _regularized_covariance(tied, config.reg_covar)
     elif config.covariance_type == "diagonal":
-        for component in range(component_count):
-            difference = data - means[component]
-            variance = (
-                responsibilities[:, component : component + 1] * difference.square()
-            ).sum(dim=0) / safe_masses[component]
-            covariances.append(variance.clamp_min(config.reg_covar))
-        covariance_tensor = torch.stack(covariances)
+        weighted_squared_sum = responsibilities.T @ data.square()
+        variances = (
+            weighted_squared_sum / safe_masses.unsqueeze(1) - means.square()
+        ).clamp_min(config.reg_covar)
+        covariance_tensor = variances
     else:
-        for component in range(component_count):
-            difference = data - means[component]
-            variance = (
-                responsibilities[:, component : component + 1] * difference.square()
-            ).sum() / (safe_masses[component] * feature_count)
-            covariances.append(variance.clamp_min(config.reg_covar))
-        covariance_tensor = torch.stack(covariances)
+        weighted_squared_sum = responsibilities.T @ data.square()
+        variances = (
+            weighted_squared_sum / safe_masses.unsqueeze(1) - means.square()
+        ).clamp_min(config.reg_covar)
+        covariance_tensor = (
+            variances.mean(dim=1).clamp_min(config.reg_covar)
+        )
 
     if not torch.isfinite(means).all() or not torch.isfinite(covariance_tensor).all():
         raise FloatingPointError("EM update produced non-finite parameters")
