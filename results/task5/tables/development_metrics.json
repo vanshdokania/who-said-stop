@@ -1,0 +1,9 @@
+{
+  "eer": 0.11232638018352305,
+  "far_at_threshold": 0.11240786240786241,
+  "frr_at_threshold": 0.11224489795918367,
+  "genuine_trials": 196,
+  "impostor_trials": 1628,
+  "threshold": 0.05320629884670325,
+  "total_trials": 1824
+}

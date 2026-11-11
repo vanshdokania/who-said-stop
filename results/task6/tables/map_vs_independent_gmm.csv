@@ -1,0 +1,3 @@
+ablation,setting,changed_setting,fixed_settings,eer,far_at_eer,frr_at_eer,threshold_at_eer,total_trials,genuine_trials,impostor_trials,source
+model_comparison,MAP mean-only (r=32),Speaker model estimation method,97 development speakers; 3 enrolment utterances; 64-component diagonal UBM; same features and trials,0.11232638018352305,0.11240786240786241,0.11224489795918369,0.05320629884670325,1824,196,1628,reused Task 4 development comparison
+model_comparison,Independent diagonal GMM (64 components),Speaker model estimation method,97 development speakers; 3 enrolment utterances; 64 components; same features and trials,0.4796607832322118,0.4797297297297297,0.47959183673469385,-112.30017590311274,1824,196,1628,reused Task 4 development comparison

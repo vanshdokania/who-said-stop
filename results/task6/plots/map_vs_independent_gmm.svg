@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+<rect width="100%" height="100%" fill="white"/>
+<line x1="95" y1="390" x2="745" y2="390" stroke="#222"/>
+<line x1="95" y1="60" x2="95" y2="390" stroke="#222"/>
+<text x="400.0" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Development EER: MAP vs independent GMM</text>
+<text x="400.0" y="476" text-anchor="middle" font-family="sans-serif" font-size="14">Speaker modelling method</text>
+<text x="25" y="225.0" text-anchor="middle" transform="rotate(-90 25 225.0)" font-family="sans-serif" font-size="14">Development EER</text>
+<text x="55" y="394" font-size="11">0</text>
+<text x="55" y="68" font-size="11">0.5516</text>
+<rect x="160.00" y="322.80" width="195.00" height="67.20" fill="#4472c4"/>
+<text x="257.50" y="314.80" text-anchor="middle" font-size="12">0.1123</text>
+<text x="257.50" y="414" text-anchor="middle" font-size="12">MAP mean-only (r=32)</text>
+<rect x="485.00" y="103.04" width="195.00" height="286.96" fill="#4472c4"/>
+<text x="582.50" y="95.04" text-anchor="middle" font-size="12">0.4797</text>
+<text x="582.50" y="414" text-anchor="middle" font-size="12">Independent diagonal GMM (64 components)</text>
+</svg>

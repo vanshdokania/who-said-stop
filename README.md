@@ -170,3 +170,18 @@ models are evaluated only with development trials; the selected factor is then
 applied to evaluation enrolment features without reading evaluation trials or
 labels. Adapted models, independent development GMM baselines, metrics, and
 tables are written under `results/task4/`.
+
+## Task 5: verification and scoring
+
+Run Task 5 with:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.task5.run_all
+```
+
+The scorer loads the Task 3 UBM and the selected Task 4 development and
+evaluation MAP models, then computes an average per-frame speaker-versus-UBM
+log-likelihood ratio for each trial. The development ROC, EER operating
+threshold, trial scores, and report are saved under `results/task5/`.
+Evaluation scores are written in manifest order to the root `submission.csv`
+with exactly `trial_id,score`; evaluation labels are not used.

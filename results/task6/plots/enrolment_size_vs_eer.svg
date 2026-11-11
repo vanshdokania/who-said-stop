@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+<rect width="100%" height="100%" fill="white"/>
+<line x1="95" y1="390" x2="745" y2="390" stroke="#222"/>
+<line x1="95" y1="60" x2="95" y2="390" stroke="#222"/>
+<text x="400.0" y="28" text-anchor="middle" font-family="sans-serif" font-size="18">Development EER by enrolment size</text>
+<text x="400.0" y="476" text-anchor="middle" font-family="sans-serif" font-size="14">Enrolment utterances per speaker</text>
+<text x="25" y="225.0" text-anchor="middle" transform="rotate(-90 25 225.0)" font-family="sans-serif" font-size="14">Development EER</text>
+<text x="55" y="394" font-size="11">0</text>
+<text x="55" y="68" font-size="11">0.2170</text>
+<rect x="138.33" y="103.04" width="130.00" height="286.96" fill="#4472c4"/>
+<text x="203.33" y="95.04" text-anchor="middle" font-size="12">0.1887</text>
+<text x="203.33" y="414" text-anchor="middle" font-size="12">1</text>
+<rect x="355.00" y="172.06" width="130.00" height="217.94" fill="#4472c4"/>
+<text x="420.00" y="164.06" text-anchor="middle" font-size="12">0.1433</text>
+<text x="420.00" y="414" text-anchor="middle" font-size="12">2</text>
+<rect x="571.67" y="219.16" width="130.00" height="170.84" fill="#4472c4"/>
+<text x="636.67" y="211.16" text-anchor="middle" font-size="12">0.1123</text>
+<text x="636.67" y="414" text-anchor="middle" font-size="12">3</text>
+</svg>
